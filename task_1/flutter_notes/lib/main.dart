@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notes/features/app/app.dart';
+import 'package:surf_logger/surf_logger.dart';
 
-void main() {
-  runApp(const MainApp());
+void _initLogger() {
+  Logger.addStrategy(DebugLogStrategy());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+void main() {
+  _initLogger();
+  runApp(const NotesApp());
 }
