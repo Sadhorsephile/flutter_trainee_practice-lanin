@@ -11,21 +11,23 @@ class AddNoteScreenWidgetModel
   /// @nodoc
   AddNoteScreenWidgetModel(super._model);
 
+  final TextEditingController _titleController = TextEditingController();
+
+  final TextEditingController _bodyController = TextEditingController();
+
   @override
   void initWidgetModel() {
+    _titleController.text = '';
+    _bodyController.text = '';
     super.initWidgetModel();
   }
 
   @override
   void dispose() {
+    _bodyController.dispose();
+    _titleController.dispose();
     super.dispose();
   }
-
-  @override
-  String body = '';
-
-  @override
-  String title = '';
 
   @override
   void createNewNote() {}
@@ -36,10 +38,10 @@ class AddNoteScreenWidgetModel
       Duration.zero,
       () {
         final currentTime = DateTime.now();
-        Navigator.of(context).pop(title != ''
+        Navigator.of(context).pop(_titleController.text != ''
             ? Note(
-                title: title,
-                description: body,
+                title: _titleController.text,
+                description: _bodyController.text,
                 date: DateTime(
                     currentTime.year, currentTime.month, currentTime.day),
               )
@@ -47,6 +49,12 @@ class AddNoteScreenWidgetModel
       },
     );
   }
+
+  @override
+  TextEditingController get titleController => _titleController;
+
+  @override
+  TextEditingController get bodyController => _bodyController;
 }
 
 /// Factory for widget model [AddNoteScreenWidgetModel].
@@ -57,13 +65,11 @@ AddNoteScreenWidgetModel addNoteScreenWMFactory(BuildContext context) {
 
 /// Interface of [AddNoteScreenWidgetModel]
 abstract interface class IAddNoteWidgetModel implements IWidgetModel {
-  /// Title of new note.
-  String get title;
+  /// Text editing controller for title input.
+  TextEditingController get titleController;
 
-  /// Body of new note.
-  String get body;
-  set title(String val);
-  set body(String val);
+  /// Text editing controller for description input.
+  TextEditingController get bodyController;
 
   /// Callback for saving new note.
   void createNewNote();

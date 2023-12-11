@@ -41,8 +41,10 @@ class NotesListScreenWidgetModel
       if (maybeData != null) {
         final dateKey = selectedDate;
         if (maybeData.containsKey(dateKey)) {
-          final globalKey = maybeData[dateKey]!.$1;
-          _scrollToKey(globalKey);
+          final group = maybeData[dateKey];
+          if (group != null) {
+            _scrollToKey(group.$1);
+          }
         } else {
           _showNoDateSnackBar();
         }
@@ -102,7 +104,6 @@ class NotesListScreenWidgetModel
       final maybeData = _notesListState.value.data;
       final note = newNote as Note;
       if (maybeData != null) {
-        _notesListState.loading(maybeData);
         if (maybeData.containsKey(note.date)) {
           maybeData[note.date]!.$2.add(note);
         } else {

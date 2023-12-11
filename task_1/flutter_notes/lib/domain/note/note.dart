@@ -9,14 +9,14 @@ class Note {
   Note({required this.title, required this.description, required this.date});
 
   /// Title.
-  @HiveField(0)
-  String title;
+  final String title;
 
   /// Body of note.
-  @HiveField(1)
-  String description;
+  final String description;
 
   /// Date of last modification.
-  @HiveField(2)
-  DateTime date;
+  final DateTime date;
+
+  /// @nodoc
+  Note({required this.title, required this.description, required this.date});
 }

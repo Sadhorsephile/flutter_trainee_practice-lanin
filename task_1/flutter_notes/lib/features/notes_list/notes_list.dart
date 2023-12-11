@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_notes/domain/note/note.dart';
 import 'package:flutter_notes/features/notes_list/notes_list_widget_model.dart';
 import 'package:flutter_notes/util/app_dictionary.dart';
+import 'package:intl/intl.dart';
 
 /// Screen with list of notes.
 class NotesListScreen extends ElementaryWidget<INotesListWidgetModel> {
@@ -15,6 +16,7 @@ class NotesListScreen extends ElementaryWidget<INotesListWidgetModel> {
 
   @override
   Widget build(INotesListWidgetModel wm) {
+    final formatter = DateFormat('dd-MM-yyyy');
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppDictionary.notesListAppBarTitle),
@@ -48,9 +50,9 @@ class NotesListScreen extends ElementaryWidget<INotesListWidgetModel> {
             );
           }
 
-          final sliv = <Widget>[];
+          final slivers = <Widget>[];
           for (final entry in groups.entries) {
-            sliv
+            slivers
               ..add(
                 SliverPadding(
                   key: entry.value.$1,
@@ -60,14 +62,9 @@ class NotesListScreen extends ElementaryWidget<INotesListWidgetModel> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Divider(),
+                        // formatter represents date of note in 'dd-MM-yyyy' string.
                         Text(
-                          entry.key
-                              .toString()
-                              .split(' ')
-                              .first
-                              .split('-')
-                              .reversed
-                              .join('/'),
+                          formatter.format(entry.key),
                         ),
                         const Divider(),
                       ],
@@ -97,7 +94,7 @@ class NotesListScreen extends ElementaryWidget<INotesListWidgetModel> {
           }
 
           return CustomScrollView(
-            slivers: sliv,
+            slivers: slivers,
           );
         },
       ),

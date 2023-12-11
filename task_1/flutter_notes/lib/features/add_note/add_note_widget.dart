@@ -30,20 +30,14 @@ class AddNoteScreen extends ElementaryWidget<IAddNoteWidgetModel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
+                    controller: wm.titleController,
                     decoration: const InputDecoration(
                         hintText: AppDictionary.titleString),
-                    initialValue: wm.title,
-                    onChanged: (value) {
-                      wm.title = value;
-                    },
                   ),
                   TextFormField(
+                    controller: wm.bodyController,
                     decoration: const InputDecoration(
                         hintText: AppDictionary.descriptionString),
-                    initialValue: wm.body,
-                    onChanged: (value) {
-                      wm.body = value;
-                    },
                   ),
                   const SizedBox(
                     height: 10,
