@@ -1,13 +1,13 @@
 /// Note model.
 class Note {
   /// Title.
-  String title;
+  final String title;
 
   /// Body of note.
-  String description;
+  final String description;
 
   /// Date of last modification.
-  DateTime date;
+  final DateTime date;
 
   /// @nodoc
   Note({required this.title, required this.description, required this.date});
