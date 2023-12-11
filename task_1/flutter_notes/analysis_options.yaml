@@ -1,1 +1,4 @@
-include: package:flutter_lints/flutter.yaml
+include: package:surf_lint_rules/analysis_options.yaml
+linter:
+  rules:
+    public_member_api_docs: true
