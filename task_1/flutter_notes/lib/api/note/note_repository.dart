@@ -4,7 +4,7 @@ import 'package:flutter_notes/domain/note/note.dart';
 /// Interface of note's repositories.
 abstract interface class INoteRepository {
   /// Returns all saved notes.
-  List<Note> getNotes();
+  Future<List<Note>> getNotes();
 }
 
 /// Note repository.
@@ -16,7 +16,7 @@ class MockNoteRepository implements INoteRepository {
   MockNoteRepository({required this.dataProvider});
 
   @override
-  List<Note> getNotes() {
+  Future<List<Note>> getNotes() {
     return dataProvider.getNotes();
   }
 }

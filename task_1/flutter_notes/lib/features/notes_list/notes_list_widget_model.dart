@@ -101,7 +101,6 @@ class NotesListScreenWidgetModel
       final maybeData = _notesListState.value.data;
       final note = newNote as Note;
       if (maybeData != null) {
-        _notesListState.loading(maybeData);
         if (maybeData.containsKey(note.date)) {
           maybeData[note.date]!.$2.add(note);
         } else {
