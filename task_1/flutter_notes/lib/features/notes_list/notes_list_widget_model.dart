@@ -9,6 +9,7 @@ import 'package:flutter_notes/domain/note/note.dart';
 import 'package:flutter_notes/features/add_note/add_note_widget.dart';
 import 'package:flutter_notes/features/notes_list/notes_list.dart';
 import 'package:flutter_notes/features/notes_list/notes_list_model.dart';
+import 'package:flutter_notes/util/app_dictionary.dart';
 import 'package:surf_logger/surf_logger.dart';
 
 /// Widget model class for [NotesListScreen]
@@ -29,11 +30,45 @@ class NotesListScreenWidgetModel
 
   @override
   Future<void> goToDay() async {
-    await showDatePicker(
+    final selectedDate = await showDatePicker(
       context: context,
       firstDate: DateTime(2023, 10),
       lastDate: DateTime.now(),
     );
+    if (selectedDate != null) {
+      final maybeData = _notesListState.value.data;
+      if (maybeData != null) {
+        final dateKey = selectedDate;
+        if (maybeData.containsKey(dateKey)) {
+          final group = maybeData[dateKey];
+          if (group != null) {
+            _scrollToKey(group.$1);
+          }
+        } else {
+          _showNoDateSnackBar();
+        }
+      }
+    }
+  }
+
+  void _showNoDateSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(AppDictionary.nonexistentDate),
+      ),
+    );
+  }
+
+  void _scrollToKey(GlobalKey key) {
+    final currentContext = key.currentContext;
+    if (currentContext != null) {
+      Scrollable.ensureVisible(
+        currentContext,
+        duration: const Duration(
+          seconds: 1,
+        ),
+      );
+    }
   }
 
   Future<void> _loadNotes() async {
