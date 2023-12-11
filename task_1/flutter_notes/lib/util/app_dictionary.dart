@@ -23,4 +23,7 @@ abstract class AppDictionary {
 
   /// Note body string
   static const descriptionString = 'Note body';
+
+  /// Name for notes box in hive.
+  static const hiveNotesBox = 'notes_box';
 }

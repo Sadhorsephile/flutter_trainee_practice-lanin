@@ -4,19 +4,27 @@ import 'package:flutter_notes/domain/note/note.dart';
 /// Interface of note's repositories.
 abstract interface class INoteRepository {
   /// Returns all saved notes.
-  List<Note> getNotes();
+  Future<List<Note>> getNotes();
+
+  /// Saves new note in storage.
+  void addNote(Note note);
 }
 
 /// Note repository.
-class MockNoteRepository implements INoteRepository {
+class NoteRepository implements INoteRepository {
   /// Source of notes.
   final INoteDataProvider dataProvider;
 
   /// @nodoc
-  MockNoteRepository({required this.dataProvider});
+  NoteRepository({required this.dataProvider});
 
   @override
-  List<Note> getNotes() {
+  Future<List<Note>> getNotes() async {
     return dataProvider.getNotes();
+  }
+
+  @override
+  void addNote(Note note) {
+    dataProvider.addNote(note);
   }
 }

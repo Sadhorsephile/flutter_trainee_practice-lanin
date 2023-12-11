@@ -35,11 +35,13 @@ class AddNoteScreenWidgetModel
     Future.delayed(
       Duration.zero,
       () {
+        final currentTime = DateTime.now();
         Navigator.of(context).pop(title != ''
             ? Note(
                 title: title,
                 description: body,
-                date: DateTime.now(),
+                date: DateTime(
+                    currentTime.year, currentTime.month, currentTime.day),
               )
             : null);
       },
