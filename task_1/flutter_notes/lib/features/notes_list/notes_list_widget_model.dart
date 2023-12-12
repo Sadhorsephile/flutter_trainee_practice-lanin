@@ -10,6 +10,7 @@ import 'package:flutter_notes/features/add_note/add_note_widget.dart';
 import 'package:flutter_notes/features/notes_list/notes_list.dart';
 import 'package:flutter_notes/features/notes_list/notes_list_model.dart';
 import 'package:flutter_notes/util/app_dictionary.dart';
+import 'package:hive/hive.dart';
 import 'package:surf_logger/surf_logger.dart';
 
 /// Widget model class for [NotesListScreen]
@@ -108,6 +109,7 @@ class NotesListScreenWidgetModel
         } else {
           maybeData[note.date] = (GlobalKey(), [note]);
         }
+        model.noteRepository.addNote(note);
         _notesListState.content(maybeData);
       }
     }
@@ -116,8 +118,13 @@ class NotesListScreenWidgetModel
 
 /// Factory for widget model [NotesListScreenWidgetModel].
 NotesListScreenWidgetModel notesListScreenWMFactory(BuildContext context) {
-  final INoteRepository noteRepository =
-      MockNoteRepository(dataProvider: MockNoteDataProvider());
+  final INoteRepository noteRepository = NoteRepository(
+    dataProvider: NoteDataProvider(
+      notesBox: Hive.box(NoteDataProvider.hiveNotesBoxName),
+    ),
+  );
+  // Uncomment it for testing.
+  // final INoteRepository noteRepository = NoteRepository(dataProvider: MockNoteDataProvider());
   final model = NotesListScreenModel(noteRepository);
   return NotesListScreenWidgetModel(model);
 }

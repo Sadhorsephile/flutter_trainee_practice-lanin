@@ -1,5 +1,8 @@
 /// Note model.
 class Note {
+  /// @nodoc
+  Note({required this.title, required this.description, required this.date});
+
   /// Title.
   final String title;
 
@@ -8,7 +11,4 @@ class Note {
 
   /// Date of last modification.
   final DateTime date;
-
-  /// @nodoc
-  Note({required this.title, required this.description, required this.date});
 }
