@@ -119,9 +119,12 @@ class NotesListScreenWidgetModel
 /// Factory for widget model [NotesListScreenWidgetModel].
 NotesListScreenWidgetModel notesListScreenWMFactory(BuildContext context) {
   final INoteRepository noteRepository = NoteRepository(
-      dataProvider:
-          NoteDataProvider(notesBox: Hive.box(AppDictionary.hiveNotesBox)));
-  //NoteRepository(dataProvider: MockNoteDataProvider());
+    dataProvider: NoteDataProvider(
+      notesBox: Hive.box(NoteDataProvider.hiveNotesBoxName),
+    ),
+  );
+  // Uncomment it for testing.
+  // final INoteRepository noteRepository = NoteRepository(dataProvider: MockNoteDataProvider());
   final model = NotesListScreenModel(noteRepository);
   return NotesListScreenWidgetModel(model);
 }
